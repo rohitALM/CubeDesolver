@@ -1,10 +1,8 @@
 package de.cube.CubeDesolver;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Hello world!
+ * Entrypoint Class
  * 
  */
 public class EntryPoint {
@@ -16,7 +14,7 @@ public class EntryPoint {
 	
 
 
-		List<String> children = new ArrayList<String>();
+		/*List<String> children = new ArrayList<String>();
 		children.add("Anna");
 		children.add("Dan");
 		children.add("Lola");
@@ -30,7 +28,7 @@ public class EntryPoint {
 				System.out.print(perm.get(i));
 			}
 			System.out.println();
-		}
+		}*/
 
 	}
 }
