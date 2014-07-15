@@ -13,12 +13,8 @@ public class EntryPoint {
 		SolveHappyCube solveHappyCube = new SolveHappyCube();
 		solveHappyCube.solve();
 		
-		// Select a base face - Setting Face 1 as default Base Face
-		int[][] baseFace = InitializeFaces.getFace1();
-		
-		CubeUtility util = new CubeUtility();
-		
-		util.rotateFace(baseFace);
+	
+
 
 		List<String> children = new ArrayList<String>();
 		children.add("Anna");

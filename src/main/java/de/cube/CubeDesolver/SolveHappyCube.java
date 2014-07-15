@@ -3,6 +3,9 @@
  */
 package de.cube.CubeDesolver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Encapsulate Core Solver Logic
  * 
@@ -11,9 +14,61 @@ package de.cube.CubeDesolver;
  */
 public class SolveHappyCube {
 
-	void solve() {
+	private List<FaceWrapper> permutableFaces;
+
+	public void solve() {
 		// Select a base face - Setting Face 1 as default Base Face
-		int[][] baseFace = InitializeFaces.getFace1(); 
+		int[][] baseFace = InitializeFaces.getFace1();
+		permutableFaces = buildPermutableFaceList();
+
+		Permutations<FaceWrapper> c = new Permutations<FaceWrapper>(
+				permutableFaces, 4);
+
+		while (c.hasNext()) {
+			List<FaceWrapper> perm = c.next();
+			for (int i = 0; i < perm.size(); i++) {
+				System.out.print(perm.get(i).getFaceId());
+			}
+			System.out.println();
+		}
+		System.out.println("Voila");
+
+	}
+
+	/**
+	 * Every face of the cube can have 4 states i.e. when it is rotated each
+	 * time by 90 degrees it enters a new state. This method aggregates all the
+	 * possible states of the face
+	 * 
+	 * @return
+	 */
+	private List<FaceWrapper> buildPermutableFaceList() {
+
+		List<FaceWrapper> list = new ArrayList<FaceWrapper>(20);
+
+		list = returnFaceState(InitializeFaces.getFace2(), list, 2);
+		list = returnFaceState(InitializeFaces.getFace3(), list, 3);
+		list = returnFaceState(InitializeFaces.getFace4(), list, 4);
+		list = returnFaceState(InitializeFaces.getFace5(), list, 5);
+		list = returnFaceState(InitializeFaces.getFace6(), list, 6);
+
+		return list;
+
+	}
+
+	/*
+	 * Adds the 4 states of a face to the permutable list
+	 */
+	private List<FaceWrapper> returnFaceState(int[][] face,
+			List<FaceWrapper> list, int faceId) {
+
+		for (int i = 0; i < 4; i++) {
+			FaceWrapper wrapper = new FaceWrapper(faceId, face);
+			list.add(wrapper);
+			face = CubeUtility.rotateFace(face);
+		}
+		return list;
+
 	}
 
 }
