@@ -15,23 +15,32 @@ import java.util.List;
 public class SolveHappyCube {
 
 	private List<FaceWrapper> permutableFaces;
+	// Select a base face - Setting Face 1 as default Base Face
+	private int[][] baseFace = InitializeFaces.getFace1();
 
 	public void solve() {
-		// Select a base face - Setting Face 1 as default Base Face
-		int[][] baseFace = InitializeFaces.getFace1();
+
 		permutableFaces = buildPermutableFaceList();
 
+		// Get all possible face combinations to match with the base face
 		Permutations<FaceWrapper> c = new Permutations<FaceWrapper>(
 				permutableFaces, 4);
 
 		while (c.hasNext()) {
 			List<FaceWrapper> perm = c.next();
-			for (int i = 0; i < perm.size(); i++) {
-				System.out.print(perm.get(i).getFaceId());
-			}
-			System.out.println();
+			matchEdges(perm);
+
 		}
-		System.out.println("Voila");
+
+	}
+	
+	/**
+	 * Checks if the face states received from permutation are distinct - as in belong to differenet faces
+	 * Checks if the edges match the base face
+	 * 
+	 * @param faces
+	 */
+	private void matchEdges(List<FaceWrapper> faces) {
 
 	}
 
