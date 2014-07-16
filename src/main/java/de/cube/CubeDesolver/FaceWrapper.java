@@ -14,6 +14,11 @@ public class FaceWrapper {
 
 	private int faceId;
 	private int[][] faceState;
+	
+	@SuppressWarnings("unused")
+	private FaceWrapper() {
+		//NotCalled
+	}
 
 	/**
 	 * Initialize wrapper
