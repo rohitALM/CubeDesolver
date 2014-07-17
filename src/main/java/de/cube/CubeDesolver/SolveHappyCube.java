@@ -16,17 +16,16 @@ import java.util.Set;
  */
 public class SolveHappyCube {
 
+	int count = 0;
+
 	private List<FaceWrapper> permutableFaces;
 	// Select a base face - Setting Face 1 as default Base Face
 	private FaceWrapper baseFace = new FaceWrapper(1, InitializeFaces.getFace1());
 
+	/**
+	 * Fit the edges together
+	 */
 	public void solve() {
-
-		// FaceWrapper test = new FaceWrapper(4, InitializeFaces.getFace5());
-		// int[] lestEdge = test.getLeftEdge();
-		// int[] rightEdge = test.getRightEdge();
-		// int[] topEdge = test.getTopEdge();
-		// int[] bottomEdge = test.getBottomEdge();
 
 		permutableFaces = buildPermutableFaceList();
 
@@ -42,7 +41,7 @@ public class SolveHappyCube {
 
 	/**
 	 * Checks if the face states received from permutation are distinct - as in
-	 * belong to differen faces Checks if the edges match the base face
+	 * belong to different faces Checks if the edges match the base face
 	 * 
 	 * @param faces
 	 */
@@ -54,8 +53,8 @@ public class SolveHappyCube {
 			// logical orientations
 			int[] leftEdge = faces.get(0).getRightEdge();
 			int[] rightEdge = faces.get(1).getLeftEdge();
-			int[] topEdge = faces.get(2).getTopEdge();
-			int[] bottomEdge = faces.get(3).getBottomEdge();
+			int[] bottomEdge = faces.get(2).getTopEdge();
+			int[] topEdge = faces.get(3).getBottomEdge();
 
 			// From Base Cube get the 4 edges for comparison
 			int[] leftBaseEdge = baseFace.getLeftEdge();
@@ -67,14 +66,14 @@ public class SolveHappyCube {
 			for (int leftIndex = 0; leftIndex < 5; leftIndex++) {
 				int add = 0;
 				if (0 == leftIndex) {
-					add = leftEdge[leftIndex] + leftBaseEdge[leftIndex] + topBaseEdge[0];
+					add = leftEdge[leftIndex] + leftBaseEdge[leftIndex] + topEdge[0];
 				} else if (4 == leftIndex) {
-					add = leftEdge[leftIndex] + leftBaseEdge[leftIndex] + bottomBaseEdge[0];
+					add = leftEdge[leftIndex] + leftBaseEdge[leftIndex] + bottomEdge[0];
 				} else {
 					add = leftEdge[leftIndex] + leftBaseEdge[leftIndex];
 				}
 
-				if (add > 1)
+				if (1 != add)
 					return;
 			}
 
@@ -82,11 +81,11 @@ public class SolveHappyCube {
 			for (int rightIndex = 0; rightIndex < 5; rightIndex++) {
 				int add = 0;
 				if (0 == rightIndex) {
-					add = rightEdge[rightIndex] + rightBaseEdge[rightIndex] + topBaseEdge[4];
+					add = rightEdge[rightIndex] + rightBaseEdge[rightIndex] + topEdge[4];
 				} else if (4 == rightIndex) {
-					add = rightEdge[rightIndex] + rightBaseEdge[rightIndex] + bottomBaseEdge[4];
+					add = rightEdge[rightIndex] + rightBaseEdge[rightIndex] + bottomEdge[4];
 				} else {
-					add = leftEdge[rightIndex] + leftBaseEdge[rightIndex];
+					add = rightEdge[rightIndex] + rightBaseEdge[rightIndex];
 				}
 
 				if (1 != add)
@@ -113,13 +112,124 @@ public class SolveHappyCube {
 			System.out.println("Solution Found");
 			validatePermutation(faces);
 			handleSolution(faces);
+			System.out.println(count++);
 
 		}
 
 	}
 
 	private void handleSolution(List<FaceWrapper> faces) {
-		System.out.println("Solution Found");
+		System.out.println("");
+		fitTopFace(faces);
+
+	}
+
+	/**
+	 * The four walls of the solution are now determined This method determines
+	 * in which orientation the top face fits
+	 * 
+	 * @param faces
+	 */
+	private void fitTopFace(List<FaceWrapper> faces) {
+		int topFaceId = determineTopFaceID(faces);
+
+		FaceWrapper topFace = CubeUtility.returnWrapperFaceFromId(topFaceId);
+
+		// Get the edges from the four wall faces for comparison with top face
+		int[] leftEdge = faces.get(0).getLeftEdge();
+		int[] rightEdge = faces.get(1).getRightEdge();
+		int[] bottomEdge = faces.get(2).getBottomEdge();
+		int[] topEdge = faces.get(3).getTopEdge();
+
+		boolean match = true;
+
+		// Rotate top face till it fits
+		for (int i = 0; i < 4; i++) {
+
+			match = true;
+
+			// From Top Cube get the 4 edges for comparison
+			int[] leftTopEdge = topFace.getLeftEdge();
+			int[] rightTopEdge = topFace.getRightEdge();
+			int[] topTopEdge = topFace.getTopEdge();
+			int[] bottomTopEdge = topFace.getBottomEdge();
+
+			// Compare Left Axis
+			for (int leftIndex = 0; leftIndex < 5; leftIndex++) {
+				int add = 0;
+				if (0 == leftIndex) {
+					add = leftEdge[leftIndex] + leftTopEdge[leftIndex] + topEdge[0];
+				} else if (4 == leftIndex) {
+					add = leftEdge[leftIndex] + leftTopEdge[leftIndex] + bottomEdge[0];
+				} else {
+					add = leftEdge[leftIndex] + leftTopEdge[leftIndex];
+				}
+
+				if (1 != add)
+					match = false;
+			}
+
+			// Compare Right Axis
+			for (int rightIndex = 0; rightIndex < 5; rightIndex++) {
+				int add = 0;
+				if (0 == rightIndex) {
+					add = rightEdge[rightIndex] + rightTopEdge[rightIndex] + topEdge[4];
+				} else if (4 == rightIndex) {
+					add = rightEdge[rightIndex] + rightTopEdge[rightIndex] + bottomEdge[4];
+				} else {
+					add = rightEdge[rightIndex] + rightTopEdge[rightIndex];
+				}
+
+				if (1 != add)
+					match = false;
+			}
+
+			// Compare Top Axis
+			for (int topIndex = 0; topIndex < 5; topIndex++) {
+				int add = 0;
+				add = topEdge[topIndex] + topTopEdge[topIndex];
+				if (1 != add)
+					match = false;
+			}
+
+			// Compare Bottom Axis
+
+			for (int bottomIndex = 0; bottomIndex < 5; bottomIndex++) {
+				int add = 0;
+				add = bottomEdge[bottomIndex] + bottomTopEdge[bottomIndex];
+				if (1 != add)
+					match = false;
+			}
+
+			if (match)
+				break;
+			topFace = CubeUtility.rotateFaceWithWrapper(topFace);
+
+		}
+
+		if (match)
+			System.out.println("it worked");
+		else
+			System.out.println("Shit happened");
+
+	}
+
+	/**
+	 * Determines what is the id of the top face e.g. - if the id of the faces
+	 * that make up the 4 walls is 2,3,5,6 The id of the top face is 4 This is
+	 * computed by (2+3+4+5+6)-(2+3+5+6)
+	 * 
+	 * @param faces
+	 * @return
+	 */
+	private int determineTopFaceID(List<FaceWrapper> faces) {
+		int sumofIds = 2 + 3 + 4 + 5 + 6;
+		int actualSumOfIds = 0;
+		for (int i = 0; i < faces.size(); i++) {
+			actualSumOfIds += faces.get(i).getFaceId();
+		}
+		return sumofIds - actualSumOfIds;
+
 	}
 
 	/**

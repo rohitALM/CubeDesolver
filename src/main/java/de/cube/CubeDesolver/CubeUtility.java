@@ -3,8 +3,6 @@
  */
 package de.cube.CubeDesolver;
 
-import java.util.List;
-
 /**
  * Contains all the utility methods
  * 
@@ -31,18 +29,46 @@ public final class CubeUtility {
 		return rotatedFace;
 	}
 
-	List<int[][]> permutateFaces() {
-		return null;
+	/**
+	 * Rotates the cube face by 90 degrees Returns the result encapsulated in
+	 * the wrapper object
+	 * 
+	 * @param face
+	 * @return
+	 */
+	public static FaceWrapper rotateFaceWithWrapper(FaceWrapper face) {
+
+		return new FaceWrapper(face.getFaceId(), rotateFace(face.getFaceState()));
 
 	}
 
 	/**
-	 * For every Cube Face - Generate 4 rotated possibilities These 4 options
-	 * will be fed to the permutator
+	 * Return Face wrapper object based on ID
 	 * 
+	 * @param faceID
+	 * @return
 	 */
-	void explodeFaceOrientation() {
-		List<int[][]> explodedFacesList;
+	public static FaceWrapper returnWrapperFaceFromId(int faceID) {
+
+		switch (faceID) {
+		case 1:
+			return new FaceWrapper(1, InitializeFaces.getFace1());
+
+		case 2:
+			return new FaceWrapper(2, InitializeFaces.getFace2());
+		case 3:
+			return new FaceWrapper(3, InitializeFaces.getFace3());
+		case 4:
+			return new FaceWrapper(4, InitializeFaces.getFace4());
+		case 5:
+			return new FaceWrapper(5, InitializeFaces.getFace5());
+		case 6:
+			return new FaceWrapper(6, InitializeFaces.getFace6());
+
+		default:
+			return null;
+		}
+
 	}
 
 }
