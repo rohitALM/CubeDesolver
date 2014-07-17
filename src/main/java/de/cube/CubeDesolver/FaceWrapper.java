@@ -3,6 +3,8 @@
  */
 package de.cube.CubeDesolver;
 
+import java.io.Serializable;
+
 /**
  * provides a wrapper object around a face Stores different face states and ties
  * them to a face
@@ -10,8 +12,12 @@ package de.cube.CubeDesolver;
  * @author Rohit
  * 
  */
-public class FaceWrapper {
+public class FaceWrapper implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int faceId;
 	private int[][] faceState;
 	

@@ -4,9 +4,7 @@
 package de.cube.CubeDesolver;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Encapsulate Core Solver Logic
@@ -16,11 +14,8 @@ import java.util.Set;
  */
 public class SolveHappyCube {
 
-	int count = 0;
-
 	private List<FaceWrapper> permutableFaces;
-	// Select a base face - Setting Face 1 as default Base Face
-	private FaceWrapper baseFace = new FaceWrapper(1, InitializeFaces.getFace1());
+	private FaceWrapper baseFace;
 
 	/**
 	 * Fit the edges together
@@ -48,7 +43,7 @@ public class SolveHappyCube {
 	 */
 	private void matchEdges(List<FaceWrapper> faces) {
 
-		if (validatePermutation(faces)) {
+		if (CubeUtility.validatePermutation(faces)) {
 
 			baseFace = faces.get(4);
 			// Assign face states received from permutation algorithm to their
@@ -118,8 +113,7 @@ public class SolveHappyCube {
 	}
 
 	private void handleSolution(List<FaceWrapper> faces) {
-		// System.out.println("");
-		
+		CubeUtility.printSolution(faces);
 
 	}
 
@@ -206,8 +200,11 @@ public class SolveHappyCube {
 
 		}
 
-		if (match)
+		if (match) {
 			System.out.println("it worked");
+			faces.add(topFace);
+			handleSolution(faces);
+		}
 
 	}
 
@@ -226,28 +223,6 @@ public class SolveHappyCube {
 			actualSumOfIds += faces.get(i).getFaceId();
 		}
 		return sumofIds - actualSumOfIds;
-
-	}
-
-	/**
-	 * Checks if the combination received from permutation are distinct - as in
-	 * belong to different faces
-	 * 
-	 * @param faces
-	 * @return
-	 */
-	private boolean validatePermutation(List<FaceWrapper> faces) {
-		List<Integer> idList = new ArrayList<Integer>();
-		for (int i = 0; i < faces.size(); i++) {
-			idList.add(faces.get(i).getFaceId());
-		}
-
-		Set<Integer> idSet = new HashSet<Integer>(idList);
-		if (idSet.size() < idList.size()) {
-			return false;
-		} else {
-			return true;
-		}
 
 	}
 

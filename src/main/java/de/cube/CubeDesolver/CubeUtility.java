@@ -3,6 +3,16 @@
  */
 package de.cube.CubeDesolver;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Contains all the utility methods
  * 
@@ -67,6 +77,52 @@ public final class CubeUtility {
 
 		default:
 			return null;
+		}
+
+	}
+	
+	/**
+	 * Checks if the combination received from permutation are distinct - as in
+	 * belong to different faces
+	 * 
+	 * @param faces
+	 * @return
+	 */
+	public static boolean validatePermutation(List<FaceWrapper> faces) {
+		List<Integer> idList = new ArrayList<Integer>();
+		for (int i = 0; i < faces.size(); i++) {
+			idList.add(faces.get(i).getFaceId());
+		}
+
+		Set<Integer> idSet = new HashSet<Integer>(idList);
+		if (idSet.size() < idList.size()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Prints the solution to the file
+	 * 
+	 * @param faces
+	 */
+	
+	public static void printSolution(List<FaceWrapper> faces) {
+		ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream("NUMBERS.txt"));
+			
+			oos.writeObject(faces.get(0).getFaceState());
+			//etc.
+
+			oos.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
