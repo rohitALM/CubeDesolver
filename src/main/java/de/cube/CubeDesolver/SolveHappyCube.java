@@ -30,10 +30,11 @@ public class SolveHappyCube {
 		permutableFaces = buildPermutableFaceList();
 
 		// Get all possible face combinations to match with the base face
-		Permutations<FaceWrapper> c = new Permutations<FaceWrapper>(permutableFaces, 4);
+		Permutations<FaceWrapper> c = new Permutations<FaceWrapper>(permutableFaces, 5);
 
 		while (c.hasNext()) {
 			List<FaceWrapper> perm = c.next();
+
 			matchEdges(perm);
 		}
 
@@ -49,6 +50,7 @@ public class SolveHappyCube {
 
 		if (validatePermutation(faces)) {
 
+			baseFace = faces.get(4);
 			// Assign face states received from permutation algorithm to their
 			// logical orientations
 			int[] leftEdge = faces.get(0).getRightEdge();
@@ -109,18 +111,15 @@ public class SolveHappyCube {
 					return;
 			}
 
-			System.out.println("Solution Found");
-			validatePermutation(faces);
-			handleSolution(faces);
-			System.out.println(count++);
+			fitTopFace(faces);
 
 		}
 
 	}
 
 	private void handleSolution(List<FaceWrapper> faces) {
-		System.out.println("");
-		fitTopFace(faces);
+		// System.out.println("");
+		
 
 	}
 
@@ -209,8 +208,6 @@ public class SolveHappyCube {
 
 		if (match)
 			System.out.println("it worked");
-		else
-			System.out.println("Shit happened");
 
 	}
 
@@ -223,7 +220,7 @@ public class SolveHappyCube {
 	 * @return
 	 */
 	private int determineTopFaceID(List<FaceWrapper> faces) {
-		int sumofIds = 2 + 3 + 4 + 5 + 6;
+		int sumofIds = 1 + 2 + 3 + 4 + 5 + 6;
 		int actualSumOfIds = 0;
 		for (int i = 0; i < faces.size(); i++) {
 			actualSumOfIds += faces.get(i).getFaceId();
@@ -263,8 +260,9 @@ public class SolveHappyCube {
 	 */
 	private List<FaceWrapper> buildPermutableFaceList() {
 
-		List<FaceWrapper> list = new ArrayList<FaceWrapper>(20);
+		List<FaceWrapper> list = new ArrayList<FaceWrapper>();
 
+		list = returnFaceState(InitializeFaces.getFace1(), list, 1);
 		list = returnFaceState(InitializeFaces.getFace2(), list, 2);
 		list = returnFaceState(InitializeFaces.getFace3(), list, 3);
 		list = returnFaceState(InitializeFaces.getFace4(), list, 4);
