@@ -4,13 +4,11 @@
 package de.cube.CubeDesolver;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -80,7 +78,7 @@ public final class CubeUtility {
 		}
 
 	}
-	
+
 	/**
 	 * Checks if the combination received from permutation are distinct - as in
 	 * belong to different faces
@@ -107,24 +105,123 @@ public final class CubeUtility {
 	 * 
 	 * @param faces
 	 */
-	
+
 	public static void printSolution(List<FaceWrapper> faces) {
-		ObjectOutputStream oos;
+
+		Scanner stdIn = new Scanner(System.in);
+		PrintWriter writer = null;
+		int[][] data = mergeSolutionForPrint(faces);
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream("NUMBERS.txt"));
-			
-			oos.writeObject(faces.get(0).getFaceState());
-			//etc.
 
-			oos.close();
+			writer = new PrintWriter("Data.txt");
+			for (int i = 0; i < data.length; i++) {
+				for (int j = 0; j < data[i].length; j++) {
+					if(0 == data[i][j]) {
+					writer.append(' ');
+					} else {
+						writer.append('0');
+					}
+				}
+				writer.println();
+			}
+
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			try {
+				if (writer != null)
+					writer.close();
+			} catch (Exception e) {
+				System.out.println("Could not close writer");
+			}
 		}
-
 	}
 
+	/**
+	 * Flips Array Horizontally
+	 * 
+	 * @param theArray
+	 */
+	public static void flipInPlace(int[][] theArray) {
+	    for(int i = 0; i < (theArray.length / 2); i++) {
+	    	int[] temp = theArray[i];
+	        theArray[i] = theArray[theArray.length - i - 1];
+	        theArray[theArray.length - i - 1] = temp;
+	    }
+	}
+
+	/**
+	 * Merges all faces in one array for displaying unfolded solution
+	 * 
+	 * @param faces
+	 * @return
+	 */
+	private static int[][] mergeSolutionForPrint(List<FaceWrapper> faces) {
+
+		int[][] mergedArray = new int[20][15];
+		int[][] leftFace = faces.get(0).getFaceState();
+		int[][] rightFace = faces.get(1).getFaceState();
+		int[][] bottomFace = faces.get(2).getFaceState();
+		int[][] topFace = faces.get(3).getFaceState();
+		int[][] baseFace = faces.get(4).getFaceState();
+		int[][] apexFace = faces.get(5).getFaceState();
+
+		flipInPlace(apexFace);
+		flipInPlace(topFace);
+
+		// for (int i = 0; i < 5; i++) {
+		// for (int j = 0; j < 5; j++) {
+		// System.out.print(apexFace[i][j]);
+		// }
+		// System.out.println();
+		// }
+		//
+		// System.out.println();
+		//
+		// // apexFace = mirrorHorizontally(apexFace);
+		// flipInPlace(apexFace);
+		// for (int i = 0; i < 5; i++) {
+		// for (int j = 0; j < 5; j++) {
+		// System.out.print(apexFace[i][j]);
+		// }
+		// System.out.println();
+		// }
+
+		for (int i = 0; i < 20; i++) {
+			if (i < 5) {
+				int[] leftPiece = leftFace[i];
+				int[] rightPiece = rightFace[i];
+				int[] basePiece = baseFace[i];
+				int aLength = leftPiece.length;
+
+				System.arraycopy(leftPiece, 0, mergedArray[i], 0, aLength);
+				System.arraycopy(basePiece, 0, mergedArray[i], aLength, aLength);
+				System.arraycopy(rightPiece, 0, mergedArray[i], aLength * 2, aLength);
+			}
+			if (i >= 5 && i < 10) {
+				int[] bottomPiece = bottomFace[i - 5];
+				int aLength = bottomPiece.length;
+				System.arraycopy(bottomPiece, 0, mergedArray[i], aLength, aLength);
+			}
+			if (i >= 10 && i < 15) {
+				int[] apexPiece = apexFace[i - 10];
+				int aLength = apexPiece.length;
+				System.arraycopy(apexPiece, 0, mergedArray[i], aLength, aLength);
+			}
+			if (i >= 15 && i < 20) {
+				int[] topPiece = topFace[i - 15];
+				int aLength = topPiece.length;
+				System.arraycopy(topPiece, 0, mergedArray[i], aLength, aLength);
+			}
+		}
+
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 15; j++) {
+				System.out.print(mergedArray[i][j]);
+			}
+			System.out.println();
+		}
+		return mergedArray;
+
+	}
 }

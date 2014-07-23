@@ -16,6 +16,7 @@ public class SolveHappyCube {
 
 	private List<FaceWrapper> permutableFaces;
 	private FaceWrapper baseFace;
+	boolean match = false;
 
 	/**
 	 * Fit the edges together
@@ -29,8 +30,8 @@ public class SolveHappyCube {
 
 		while (c.hasNext()) {
 			List<FaceWrapper> perm = c.next();
-
-			matchEdges(perm);
+			if (!match)
+				matchEdges(perm);
 		}
 
 	}
@@ -134,8 +135,6 @@ public class SolveHappyCube {
 		int[] bottomEdge = faces.get(2).getBottomEdge();
 		int[] topEdge = faces.get(3).getTopEdge();
 
-		boolean match = true;
-
 		// Rotate top face till it fits
 		for (int i = 0; i < 4; i++) {
 
@@ -201,7 +200,7 @@ public class SolveHappyCube {
 		}
 
 		if (match) {
-			System.out.println("it worked");
+			System.out.println("Worjked");
 			faces.add(topFace);
 			handleSolution(faces);
 		}
