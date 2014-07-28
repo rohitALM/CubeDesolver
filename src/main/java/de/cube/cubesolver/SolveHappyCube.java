@@ -42,10 +42,9 @@ public class SolveHappyCube {
 		// Solve the yellow cube puzzle
 		setDataForYellowCubePuzzle();
 		solvePuzzle();
-		//Solve the Purple CUbe puzzle
+		// Solve the Purple CUbe puzzle
 		setDataForPurpleCubePuzzle();
 		solvePuzzle();
-
 
 	}
 
@@ -53,7 +52,7 @@ public class SolveHappyCube {
 	 * 
 	 */
 	private void solvePuzzle() {
-		
+
 		permutableFaces = buildPermutableFaceList();
 
 		// Get all possible face combinations to match with the base face
@@ -230,7 +229,6 @@ public class SolveHappyCube {
 		}
 
 		if (match) {
-			System.out.println("Worked");
 			faces.add(topFace);
 			handleSolution(faces);
 		}
@@ -325,7 +323,7 @@ public class SolveHappyCube {
 		InitializeFaces.setFace6(InitializeRedCube.getFace6());
 
 	}
-	
+
 	/**
 	 * Sets the data to solve the Yellow cube puzzle
 	 */
@@ -340,7 +338,7 @@ public class SolveHappyCube {
 		InitializeFaces.setFace6(InitializeYellowCube.getFace6());
 
 	}
-	
+
 	/**
 	 * Sets the data to solve the Purple cube puzzle
 	 */
