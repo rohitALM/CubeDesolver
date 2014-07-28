@@ -1,15 +1,19 @@
 /**
  * 
  */
-package de.cube.CubeDesolver;
+package de.cube.cubesolver;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cube.bean.FaceWrapper;
 import de.cube.input.InitializeBlueCube;
+import de.cube.input.InitializeFaces;
 import de.cube.input.InitializePurpleCube;
 import de.cube.input.InitializeRedCube;
 import de.cube.input.InitializeYellowCube;
+import de.cube.utility.CubeUtility;
+import de.cube.utility.Permutations;
 
 /**
  * Encapsulate Core Solver Logic

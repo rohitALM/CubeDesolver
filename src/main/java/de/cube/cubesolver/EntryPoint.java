@@ -1,4 +1,4 @@
-package de.cube.CubeDesolver;
+package de.cube.cubesolver;
 
 
 /**

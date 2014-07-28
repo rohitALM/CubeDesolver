@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.cube.CubeDesolver;
+package de.cube.bean;
 
 /**
  * Bean encapsulating a face of the cube

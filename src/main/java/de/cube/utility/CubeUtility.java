@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.cube.CubeDesolver;
+package de.cube.utility;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import de.cube.bean.FaceWrapper;
+import de.cube.input.InitializeFaces;
 
 /**
  * Contains all the utility methods

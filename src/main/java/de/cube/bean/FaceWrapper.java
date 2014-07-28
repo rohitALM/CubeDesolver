@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.cube.CubeDesolver;
+package de.cube.bean;
 
 import java.io.Serializable;
 
@@ -32,7 +32,7 @@ public class FaceWrapper implements Serializable {
 	 * @param faceId
 	 * @param faceState
 	 */
-	FaceWrapper(int faceId, int[][] faceState) {
+	public FaceWrapper(int faceId, int[][] faceState) {
 		this.faceId = faceId;
 		this.faceState = faceState;
 	}

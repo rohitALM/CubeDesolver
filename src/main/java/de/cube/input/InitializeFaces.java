@@ -1,7 +1,7 @@
 /**
  * 
  */
-package de.cube.CubeDesolver;
+package de.cube.input;
 
 /**
  * This class encodes the input cubes directly

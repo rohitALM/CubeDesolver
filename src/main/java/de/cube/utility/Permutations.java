@@ -1,4 +1,4 @@
-package de.cube.CubeDesolver;
+package de.cube.utility;
 
 import java.util.ArrayList;
 import java.util.List;
