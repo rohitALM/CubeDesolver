@@ -200,7 +200,7 @@ public class SolveHappyCube {
 		}
 
 		if (match) {
-			System.out.println("Worjked");
+			System.out.println("Worked");
 			faces.add(topFace);
 			handleSolution(faces);
 		}

@@ -8,7 +8,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -108,7 +107,6 @@ public final class CubeUtility {
 
 	public static void printSolution(List<FaceWrapper> faces) {
 
-		Scanner stdIn = new Scanner(System.in);
 		PrintWriter writer = null;
 		int[][] data = mergeSolutionForPrint(faces);
 		try {
@@ -116,8 +114,8 @@ public final class CubeUtility {
 			writer = new PrintWriter("Data.txt");
 			for (int i = 0; i < data.length; i++) {
 				for (int j = 0; j < data[i].length; j++) {
-					if(0 == data[i][j]) {
-					writer.append(' ');
+					if (0 == data[i][j]) {
+						writer.append(' ');
 					} else {
 						writer.append('0');
 					}
@@ -143,11 +141,11 @@ public final class CubeUtility {
 	 * @param theArray
 	 */
 	public static void flipInPlace(int[][] theArray) {
-	    for(int i = 0; i < (theArray.length / 2); i++) {
-	    	int[] temp = theArray[i];
-	        theArray[i] = theArray[theArray.length - i - 1];
-	        theArray[theArray.length - i - 1] = temp;
-	    }
+		for (int i = 0; i < (theArray.length / 2); i++) {
+			int[] temp = theArray[i];
+			theArray[i] = theArray[theArray.length - i - 1];
+			theArray[theArray.length - i - 1] = temp;
+		}
 	}
 
 	/**
@@ -168,24 +166,6 @@ public final class CubeUtility {
 
 		flipInPlace(apexFace);
 		flipInPlace(topFace);
-
-		// for (int i = 0; i < 5; i++) {
-		// for (int j = 0; j < 5; j++) {
-		// System.out.print(apexFace[i][j]);
-		// }
-		// System.out.println();
-		// }
-		//
-		// System.out.println();
-		//
-		// // apexFace = mirrorHorizontally(apexFace);
-		// flipInPlace(apexFace);
-		// for (int i = 0; i < 5; i++) {
-		// for (int j = 0; j < 5; j++) {
-		// System.out.print(apexFace[i][j]);
-		// }
-		// System.out.println();
-		// }
 
 		for (int i = 0; i < 20; i++) {
 			if (i < 5) {
@@ -215,12 +195,6 @@ public final class CubeUtility {
 			}
 		}
 
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 15; j++) {
-				System.out.print(mergedArray[i][j]);
-			}
-			System.out.println();
-		}
 		return mergedArray;
 
 	}

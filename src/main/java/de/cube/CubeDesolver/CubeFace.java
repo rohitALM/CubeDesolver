@@ -4,6 +4,8 @@
 package de.cube.CubeDesolver;
 
 /**
+ * Bean encapsulating a face of the cube
+ * 
  * @author Rohit
  * 
  */
