@@ -6,6 +6,11 @@ package de.cube.CubeDesolver;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.cube.input.InitializeBlueCube;
+import de.cube.input.InitializePurpleCube;
+import de.cube.input.InitializeRedCube;
+import de.cube.input.InitializeYellowCube;
+
 /**
  * Encapsulate Core Solver Logic
  * 
@@ -17,12 +22,34 @@ public class SolveHappyCube {
 	private List<FaceWrapper> permutableFaces;
 	private FaceWrapper baseFace;
 	boolean match = false;
+	String currentPuzzle;// Which is the current puzzle being solved
 
 	/**
 	 * Fit the edges together
 	 */
 	public void solve() {
+		// Solve iteratively for each puzzle
+		// First solving for blue puzzle
+		setDataForBlueCubePuzzle();
+		solvePuzzle();
+		// Solve the red cube puzzle
+		setDataForRedCubePuzzle();
+		solvePuzzle();
+		// Solve the yellow cube puzzle
+		setDataForYellowCubePuzzle();
+		solvePuzzle();
+		//Solve the Purple CUbe puzzle
+		setDataForPurpleCubePuzzle();
+		solvePuzzle();
 
+
+	}
+
+	/**
+	 * 
+	 */
+	private void solvePuzzle() {
+		
 		permutableFaces = buildPermutableFaceList();
 
 		// Get all possible face combinations to match with the base face
@@ -33,7 +60,6 @@ public class SolveHappyCube {
 			if (!match)
 				matchEdges(perm);
 		}
-
 	}
 
 	/**
@@ -114,7 +140,7 @@ public class SolveHappyCube {
 	}
 
 	private void handleSolution(List<FaceWrapper> faces) {
-		CubeUtility.printSolution(faces);
+		CubeUtility.printSolution(faces, currentPuzzle);
 
 	}
 
@@ -247,8 +273,13 @@ public class SolveHappyCube {
 
 	}
 
-	/*
+	/**
 	 * Adds the 4 states of a face to the permutable list
+	 * 
+	 * @param face
+	 * @param list
+	 * @param faceId
+	 * @return
 	 */
 	private List<FaceWrapper> returnFaceState(int[][] face, List<FaceWrapper> list, int faceId) {
 
@@ -258,6 +289,66 @@ public class SolveHappyCube {
 			face = CubeUtility.rotateFace(face);
 		}
 		return list;
+
+	}
+
+	/**
+	 * Sets the data to solve the blue cube puzzle
+	 */
+	private void setDataForBlueCubePuzzle() {
+		currentPuzzle = "Blue";
+		match = false;
+		InitializeFaces.setFace1(InitializeBlueCube.getFace1());
+		InitializeFaces.setFace2(InitializeBlueCube.getFace2());
+		InitializeFaces.setFace3(InitializeBlueCube.getFace3());
+		InitializeFaces.setFace4(InitializeBlueCube.getFace4());
+		InitializeFaces.setFace5(InitializeBlueCube.getFace5());
+		InitializeFaces.setFace6(InitializeBlueCube.getFace6());
+
+	}
+
+	/**
+	 * Sets the data to solve the Red cube puzzle
+	 */
+	private void setDataForRedCubePuzzle() {
+		currentPuzzle = "Red";
+		match = false;
+		InitializeFaces.setFace1(InitializeRedCube.getFace1());
+		InitializeFaces.setFace2(InitializeRedCube.getFace2());
+		InitializeFaces.setFace3(InitializeRedCube.getFace3());
+		InitializeFaces.setFace4(InitializeRedCube.getFace4());
+		InitializeFaces.setFace5(InitializeRedCube.getFace5());
+		InitializeFaces.setFace6(InitializeRedCube.getFace6());
+
+	}
+	
+	/**
+	 * Sets the data to solve the Yellow cube puzzle
+	 */
+	private void setDataForYellowCubePuzzle() {
+		currentPuzzle = "Yellow";
+		match = false;
+		InitializeFaces.setFace1(InitializeYellowCube.getFace1());
+		InitializeFaces.setFace2(InitializeYellowCube.getFace2());
+		InitializeFaces.setFace3(InitializeYellowCube.getFace3());
+		InitializeFaces.setFace4(InitializeYellowCube.getFace4());
+		InitializeFaces.setFace5(InitializeYellowCube.getFace5());
+		InitializeFaces.setFace6(InitializeYellowCube.getFace6());
+
+	}
+	
+	/**
+	 * Sets the data to solve the Purple cube puzzle
+	 */
+	private void setDataForPurpleCubePuzzle() {
+		currentPuzzle = "Purple";
+		match = false;
+		InitializeFaces.setFace1(InitializePurpleCube.getFace1());
+		InitializeFaces.setFace2(InitializePurpleCube.getFace2());
+		InitializeFaces.setFace3(InitializePurpleCube.getFace3());
+		InitializeFaces.setFace4(InitializePurpleCube.getFace4());
+		InitializeFaces.setFace5(InitializePurpleCube.getFace5());
+		InitializeFaces.setFace6(InitializePurpleCube.getFace6());
 
 	}
 

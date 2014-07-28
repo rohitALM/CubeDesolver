@@ -105,13 +105,13 @@ public final class CubeUtility {
 	 * @param faces
 	 */
 
-	public static void printSolution(List<FaceWrapper> faces) {
+	public static void printSolution(List<FaceWrapper> faces , String puzzleId) {
 
 		PrintWriter writer = null;
 		int[][] data = mergeSolutionForPrint(faces);
 		try {
 
-			writer = new PrintWriter("Data.txt");
+			writer = new PrintWriter(puzzleId+"_Solution.txt");
 			for (int i = 0; i < data.length; i++) {
 				for (int j = 0; j < data[i].length; j++) {
 					if (0 == data[i][j]) {
